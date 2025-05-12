@@ -4,6 +4,8 @@ import {
   pollBatchResults,
   submitBatch,
 } from "../../libs/judge0.lib.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const createProblem = async (req, res) => {
   //going to get all the data from the request body
@@ -31,6 +33,9 @@ export const createProblem = async (req, res) => {
   try {
     for (const [language, solutionCode] of Object.entries(referenceSolutions)) {
       const languageId = getJudge0LanguageId(language);
+      // console.log(languageId);
+      // console.log(solutionCode);
+      console.log([languageId, solutionCode]);
 
       if (!languageId) {
         return res
@@ -39,25 +44,29 @@ export const createProblem = async (req, res) => {
       }
 
       const submissions = testcases.map(({ input, output }) => ({
-        source_code: solutionCode,
         language_id: languageId,
+        source_code: solutionCode,
         stdin: input,
         expected_output: output,
       }));
+      console.log(submissions);
+      console.log(process.env.JUDGE0_API_URL);
 
       const submissionResults = await submitBatch(submissions);
       // tokens is a new array with only the tokens from the original array of objects
       const tokens = submissionResults.map((res) => res.token);
 
       const results = await pollBatchResults(tokens);
+      console.log(results);
 
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
-        if (result.status.id !== 3) {
+        if (result.status_id !== 3) {
           return res.status(400).json({
             error: `Testcase ${i + 1} failed for language ${language}`,
           });
         }
+        console.log(result);
       }
 
       // save the problem to the database

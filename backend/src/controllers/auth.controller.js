@@ -4,7 +4,7 @@ import { UserRole } from "../generated/prisma/index.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password, name, role } = req.body;
 
   try {
     const existingUser = await db.user.findUnique({ where: { email } });
@@ -18,13 +18,13 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await db.user.create({
-      data: { email, password: hashedPassword, name, role: UserRole.USER },
+      data: { email, password: hashedPassword, name, role: role },
     });
 
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-
+    // sending the cookie so we automatically login
     res.cookie("jwt", token, {
       httpOnly: true,
       sameSite: "strict",
@@ -62,7 +62,9 @@ export const login = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res
+        .status(404)
+        .json({ message: "User not found, Please Register" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -73,6 +75,7 @@ export const login = async (req, res) => {
       });
     }
 
+    // creates a jwt token with the payload id where key is id and value is user.id, jwt secret and expiry
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -123,7 +126,7 @@ export const logout = async (req, res) => {
   }
 };
 
-// middleware is needed here
+// We use a middleware here which checks if the user is authenticated and then we pass this controller
 export const check = async (req, res) => {
   try {
     res.status(200).json({

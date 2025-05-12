@@ -11,13 +11,22 @@ export const authMiddleware = async (req, res, next) => {
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Unauthorised no token provided" });
+        .json({ message: "Unauthorised,no token provided" });
     }
 
     let decoded;
 
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
+      /*
+        decoded returns an object like this
+      {
+        userId: 123,
+        role: 'admin',
+        iat: 1715449390,
+        exp: 1715452990
+      }
+      */
     } catch (error) {
       return res.status(401).json({
         message: "Unauthorised - Invalid token",

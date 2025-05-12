@@ -1,3 +1,4 @@
+// Judge 0 utility methods
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -11,16 +12,30 @@ export const getJudge0LanguageId = (Language) => {
   return languageMap[Language.toUpperCase()];
 };
 
+// export const submitBatch = async (submissions) => {
+//   const { data } = await axios.post(
+//     `${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`,
+//     {
+//       submissions,
+//     }
+//   );
+//   console.log("Submission Results:", data);
+//   return data; //[{token},{token},{token}]
+// };
+
 export const submitBatch = async (submissions) => {
   const { data } = await axios.post(
-    `${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`,
+    `${process.env.JUDGE0_API_URL}/submissions/batch`,
+    { submissions },
     {
-      submissions,
+      params: {
+        base64_encoded: false,
+        wait: false,
+      },
     }
   );
   console.log("Submission Results:", data);
-
-  return data; //[{token},{token},{token}]
+  return data; // Should return: { submissions: [{ token }, { token }] }
 };
 
 const sleep = (ms) => {
@@ -43,7 +58,7 @@ export const pollBatchResults = async (tokens) => {
     console.log(results);
 
     const isAllDone = results.every(
-      (r) => r.status.id !== 1 && r.status.id !== 2
+      (r) => r.status_id !== 1 && r.status_id !== 2
     );
     if (isAllDone) {
       return results;
