@@ -1,5 +1,6 @@
 // Judge 0 utility methods
 import dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
 
 export const getJudge0LanguageId = (Language) => {
@@ -58,7 +59,7 @@ export const pollBatchResults = async (tokens) => {
     console.log(results);
 
     const isAllDone = results.every(
-      (r) => r.status_id !== 1 && r.status_id !== 2
+      (r) => r.status.id !== 1 && r.status.id !== 2
     );
     if (isAllDone) {
       return results;

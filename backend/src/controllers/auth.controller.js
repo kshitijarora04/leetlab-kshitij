@@ -4,7 +4,7 @@ import { UserRole } from "../generated/prisma/index.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-  const { email, password, name, role } = req.body;
+  const { email, password, name} = req.body;
 
   try {
     const existingUser = await db.user.findUnique({ where: { email } });
@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await db.user.create({
-      data: { email, password: hashedPassword, name, role: role },
+      data: { email, password: hashedPassword, name},
     });
 
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
