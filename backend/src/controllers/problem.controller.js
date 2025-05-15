@@ -55,6 +55,7 @@ export const createProblem = async (req, res) => {
       // console.log(process.env.JUDGE0_API_URL);
 
       const submissionResults = await submitBatch(submissions);
+      // submission results returns an array of object of tokens
       // console.log(submissionResults);
 
       // tokens is a new array with only the tokens from the original array of objects
@@ -62,10 +63,13 @@ export const createProblem = async (req, res) => {
       // console.log(tokens);
 
       const results = await pollBatchResults(tokens);
-      // console.log(results);
+      // results is an array of objects
+
+      // console.log(results.length);
 
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
+        // console.log("------------------------->");
         // console.log(result);
 
         if (result.status.id !== 3) {
@@ -91,7 +95,7 @@ export const createProblem = async (req, res) => {
           userId: req.user.id,
         },
       });
-
+      console.log("Problem Created Successfully");
       return res.status(201).json(newProblem);
     }
   } catch (error) {
@@ -101,7 +105,9 @@ export const createProblem = async (req, res) => {
   }
 };
 
-export const getAllProblems = async (req, res) => {};
+export const getAllProblems = async (req, res) => {
+  
+};
 
 export const getProblemById = async (req, res) => {};
 

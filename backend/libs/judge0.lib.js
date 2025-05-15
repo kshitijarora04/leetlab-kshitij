@@ -35,7 +35,7 @@ export const submitBatch = async (submissions) => {
       },
     }
   );
-  console.log("Submission Results:", data);
+  // console.log("Submission Results:", data);
   return data; // Should return: { submissions: [{ token }, { token }] }
 };
 
@@ -54,9 +54,11 @@ export const pollBatchResults = async (tokens) => {
         },
       }
     );
+    // console.log(data);
 
     const results = data.submissions;
-    console.log(results);
+    // results here is an array of objects
+    // console.log(results);
 
     const isAllDone = results.every(
       (r) => r.status.id !== 1 && r.status.id !== 2
