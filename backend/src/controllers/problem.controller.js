@@ -106,10 +106,30 @@ export const createProblem = async (req, res) => {
 };
 
 export const getAllProblems = async (req, res) => {
-  
+  try {
+    const problems = await db.problem.findMany();
+
+    if (!problems) {
+      return res.status(404).json({
+        error: "No problems found",
+      });
+    }
+
+    res.status(200).json({
+      success: "true",
+      message: "Message Fetched Successfully",
+      problems,
+    });
+  } catch (error) {
+    console.log(error);
+    // console.log("Error creating Problem");
+    return res.status(501).json({ error: "Error fetching Problems" });
+  }
 };
 
-export const getProblemById = async (req, res) => {};
+export const getProblemById = async (req, res) => {
+  
+};
 
 export const updateproblem = async (req, res) => {};
 
