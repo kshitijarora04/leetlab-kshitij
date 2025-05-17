@@ -160,10 +160,8 @@ export const updateproblem = async (req, res) => {};
 
 export const deleteProblem = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
 
   try {
-  
     const problem = await db.problem.findUnique({
       where: {
         id: id,
@@ -182,7 +180,6 @@ export const deleteProblem = async (req, res) => {
       success: true,
       message: "Problem Deleted Successfully",
     });
-
   } catch (error) {
     console.log("Error while deleting problem", error);
     return res.status(404).json({ error: "Error while deleting a problem" });
