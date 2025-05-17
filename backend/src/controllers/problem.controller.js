@@ -128,11 +128,65 @@ export const getAllProblems = async (req, res) => {
 };
 
 export const getProblemById = async (req, res) => {
-  
+  const { id } = req.params;
+  try {
+    const problem = await db.problem.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!problem) {
+      return res.status(404).json({
+        error: "Problem not found",
+      });
+    }
+
+    res.status(200).json({
+      success: "true",
+      message: "Problem Fetched Successfully",
+      problem,
+    });
+  } catch (error) {
+    console.log(error);
+    // console.log("Error creating Problem");
+    return res
+      .status(501)
+      .json({ error: "Error while fetching Problem by ID" });
+  }
 };
 
+//Implement by yourself
 export const updateproblem = async (req, res) => {};
 
-export const deleteProblem = async (req, res) => {};
+export const deleteProblem = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  try {
+  
+    const problem = await db.problem.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!problem) {
+      return res.status(404).json({
+        error: "Problem not Found",
+      });
+    }
+
+    await db.problem.delete({ where: { id: id } });
+
+    res.status(200).json({
+      success: true,
+      message: "Problem Deleted Successfully",
+    });
+
+  } catch (error) {
+    console.log("Error while deleting problem", error);
+    return res.status(404).json({ error: "Error while deleting a problem" });
+  }
+};
 
 export const getAllProblemsSolvedByUser = async (req, res) => {};

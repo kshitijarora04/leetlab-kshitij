@@ -37,7 +37,7 @@ problemRoutes.put(
 
 // Delete problem Route
 problemRoutes.delete(
-  "delete-problem/:id",
+  "/delete-problem/:id",
   authMiddleware,
   checkAdmin,
   deleteProblem
