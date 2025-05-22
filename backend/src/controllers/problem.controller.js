@@ -51,7 +51,7 @@ export const createProblem = async (req, res) => {
         stdin: input,
         expected_output: output,
       }));
-      // console.log(submissions);
+      console.log(submissions);
       // console.log(process.env.JUDGE0_API_URL);
 
       const submissionResults = await submitBatch(submissions);
