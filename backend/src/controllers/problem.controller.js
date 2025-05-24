@@ -170,6 +170,7 @@ export const updateproblem = async (req, res) => {
     referenceSolutions,
   } = req.body;
 
+  const { id } = req.params;
   if (req.user.role !== "ADMIN") {
     return res
       .status(403)
