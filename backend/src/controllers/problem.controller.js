@@ -79,25 +79,26 @@ export const createProblem = async (req, res) => {
         }
         // console.log(result);
       }
-
-      // save the problem to the database
-      const newProblem = await db.problem.create({
-        data: {
-          title,
-          description,
-          difficulty,
-          tags,
-          examples,
-          constraints,
-          testcases,
-          codeSnippet,
-          referenceSolutions,
-          userId: req.user.id,
-        },
-      });
-      console.log("Problem Created Successfully");
-      return res.status(201).json(newProblem);
     }
+
+    // save the problem to the database
+    const newProblem = await db.problem.create({
+      data: {
+        title,
+        description,
+        difficulty,
+        tags,
+        examples,
+        constraints,
+        testcases,
+        codeSnippet,
+        referenceSolutions,
+        userId: req.user.id,
+      },
+    });
+
+    console.log("Problem Created Successfully");
+    return res.status(201).json(newProblem);
   } catch (error) {
     console.log(error);
     // console.log("Error creating Problem");
@@ -156,7 +157,82 @@ export const getProblemById = async (req, res) => {
 };
 
 //Implement by yourself
-export const updateproblem = async (req, res) => {};
+export const updateproblem = async (req, res) => {
+  const {
+    title,
+    description,
+    difficulty,
+    tags,
+    examples,
+    constraints,
+    testcases,
+    codeSnippet,
+    referenceSolutions,
+  } = req.body;
+
+  if (req.user.role !== "ADMIN") {
+    return res
+      .status(403)
+      .json({ message: "You are not allowed to create a problem" });
+  }
+
+  try {
+    for (const [language, solutionCode] of Object.entries(referenceSolutions)) {
+      const languageId = getJudge0LanguageId(language);
+
+      if (!languageId) {
+        return res.status(400).json({ error: `${language} is not supported ` });
+      }
+
+      const submissions = testcases.map(({ input, output }) => ({
+        language_id: languageId,
+        source_code: solutionCode,
+        stdin: input,
+        expected_output: output,
+      }));
+
+      const submissionResults = await submitBatch(submissions);
+
+      const tokens = submissionResults.map((res) => res.token);
+
+      const results = await pollBatchResults(tokens);
+
+      for (let i = 0; i < results.length; i++) {
+        const result = results[i];
+
+        if (result.status.id !== 3) {
+          return res.status(400).json({
+            error: `Testcase ${i + 1} failed for ${language}`,
+          });
+        }
+      }
+    }
+    const updatedProblem = await db.problem.update({
+      where: { id },
+      data: {
+        title,
+        description,
+        difficulty,
+        tags,
+        examples,
+        constraints,
+        testcases,
+        codeSnippet,
+        referenceSolutions,
+        userId: req.user.id,
+      },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Problem updated successfully",
+      updatedProblem,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(501).json({ error: "Error updating the problem" });
+  }
+};
 
 export const deleteProblem = async (req, res) => {
   const { id } = req.params;
