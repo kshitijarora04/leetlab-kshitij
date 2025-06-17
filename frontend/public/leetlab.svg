@@ -1,7 +1,12 @@
 <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#191E25" />
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-        font-family="monospace" font-size="48" fill="#2F3363">
+  <!-- Outer Circle -->
+  <circle cx="50" cy="50" r="48" fill="#2C2C54" />
+
+  <!-- Inner Circle -->
+  <circle cx="50" cy="50" r="34" fill="#0F0F1A" />
+
+  <!-- Code Symbol -->
+  <text x="50" y="50" font-family="Consolas, monospace" font-size="26" fill="white" text-anchor="middle" dominant-baseline="central">
     &lt;/&gt;
   </text>
 </svg>
