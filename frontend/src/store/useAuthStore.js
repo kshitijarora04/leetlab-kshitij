@@ -12,10 +12,10 @@ export const useAuthStore = create((set) => ({
     set({ isCheckingAuth: true });
     try {
       const res = await axiosInstance.get("/auth/check");
-      console.log("checkAuth Response", res.data);
+      // console.log("✅ Auth check success:", res.data);
       set({ authUser: res.data.user });
     } catch (error) {
-      console.log("Error checking auth", error);
+      // console.log("Error checking auth", error);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -67,5 +67,4 @@ export const useAuthStore = create((set) => ({
       toast.error("Error logging out");
     }
   },
-  
 }));
