@@ -13,6 +13,10 @@
   }
 }
 
+@theme {
+  --color-leetlab-theme: #303366
+}
+
 .animate-blink {
   animation: blink 2s step-start infinite;
 }

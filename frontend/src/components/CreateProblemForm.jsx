@@ -6,6 +6,7 @@ import { z } from 'zod'
 import Editor from "@monaco-editor/react"
 import { axiosInstance } from '../lib/axios'
 import { Navigate, useNavigate } from 'react-router-dom'
+import toast from "react-hot-toast";
 
 const problemSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters"),
@@ -40,7 +41,7 @@ const problemSchema = z.object({
             explanation: z.string().optional(),
         }),
     }),
-    codeSnippets: z.object({
+    codeSnippet: z.object({
         JAVASCRIPT: z.string().min(1, "JavaScript code snippet is required"),
         PYTHON: z.string().min(1, "Python code snippet is required"),
         JAVA: z.string().min(1, "Java solution is required"),
@@ -98,7 +99,7 @@ const sampledpData = {
                 "There are five ways to climb to the top:\n1. 1 step + 1 step + 1 step + 1 step\n2. 1 step + 1 step + 2 steps\n3. 1 step + 2 steps + 1 step\n4. 2 steps + 1 step + 1 step\n5. 2 steps + 2 steps",
         },
     },
-    codeSnippets: {
+    codeSnippet: {
         JAVASCRIPT: `/**
 * @param {number} n
 * @return {number}
@@ -342,7 +343,7 @@ const sampleStringProblem = {
             explanation: '"amanaplanacanalpanama" is a palindrome.',
         },
     },
-    codeSnippets: {
+    codeSnippet: {
         JAVASCRIPT: `/**
    * @param {string} s
    * @return {boolean}
@@ -515,7 +516,7 @@ const CreateProblemForm = () => {
                 PYTHON: { input: "", output: "", explanation: "" },
                 JAVA: { input: "", output: "", explanation: "" },
             },
-            codeSnippets: {
+            codeSnippet: {
                 JAVASCRIPT: "function solution() {\n  // Write your code here\n}",
                 PYTHON: "def solution():\n    # Write your code here\n    pass",
                 JAVA: "public class Solution {\n    public static void main(String[] args) {\n        // Write your code here\n    }\n}",
@@ -542,11 +543,23 @@ const CreateProblemForm = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (value) => {
-        console.log(value);
+        try {
+            setIsLoading(true);
+            const res = await axiosInstance.post("/problems/create-problem", value);
+            console.log(res.data);
+            toast.success(res.data.message || "Problem Created Successfully");
+            navigation("/");
+        } catch (error) {
+            console.log("Error creating Problem", error);
+            toast.error("Error Creating Problem");
+        }
+        finally {
+            setIsLoading(false);
+        }
     }
 
     const loadSampleData = () => {
-        const sampleData = sampleType === "DP" ? sampledpData : sampleStringProblem
+        const sampleData = sampleType == "DP" ? sampledpData : sampleStringProblem;
         replaceTags(sampleData.tags.map((tag) => tag))
         replaceTestCases(sampleData.testcases.map((tc) => tc));
 
@@ -813,7 +826,7 @@ const CreateProblemForm = () => {
                                                 </h4>
                                                 <div className="border rounded-md overflow-hidden">
                                                     <Controller
-                                                        name={`codeSnippets.${language}`}
+                                                        name={`codeSnippet.${language}`}
                                                         control={control}
                                                         render={({ field }) => (
                                                             <Editor
@@ -834,10 +847,10 @@ const CreateProblemForm = () => {
                                                         )}
                                                     />
                                                 </div>
-                                                {errors.codeSnippets?.[language] && (
+                                                {errors.codeSnippet?.[language] && (
                                                     <div className="mt-2">
                                                         <span className="text-error text-sm">
-                                                            {errors.codeSnippets[language].message}
+                                                            {errors.codeSnippet[language].message}
                                                         </span>
                                                     </div>
                                                 )}

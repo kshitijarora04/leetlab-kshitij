@@ -24,17 +24,31 @@ const Navbar = () => {
                 <div className="flex items-center gap-8">
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar flex flex-row ">
-                            <div className="w-10 rounded-full ">
-                                <img
+                            <div className="w-10 rounded-full bg-leetlab-theme">
+                                {/* <img
                                     src={
                                         authUser?.image ||
                                         "https://avatar.iran.liara.run/public/boy"
                                     }
                                     alt="User Avatar"
                                     className="object-cover"
-                                />
+                                /> */}
+                                {authUser?.image ? (
+                                    <img
+                                        src={authUser.image}
+                                        alt="User Avatar"
+                                        className="object-cover w-full h-full rounded-full"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-white font-bold text-lg">
+                                        {authUser?.name
+                                            ?.split(" ")
+                                            .map((n) => n[0])
+                                            .join("")
+                                            .toUpperCase()}
+                                    </div>
+                                )}
                             </div>
-
                         </label>
                         <ul
                             tabIndex={0}

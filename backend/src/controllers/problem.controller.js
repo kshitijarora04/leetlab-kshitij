@@ -98,7 +98,10 @@ export const createProblem = async (req, res) => {
     });
 
     console.log("Problem Created Successfully");
-    return res.status(201).json(newProblem);
+    return res.status(201).json({
+      success: true,
+      message: "Problem Created successfully",
+    });
   } catch (error) {
     console.log(error);
     // console.log("Error creating Problem");
@@ -108,7 +111,15 @@ export const createProblem = async (req, res) => {
 
 export const getAllProblems = async (req, res) => {
   try {
-    const problems = await db.problem.findMany();
+    const problems = await db.problem.findMany({
+      include: {
+        solvedBy: {
+          where: {
+            userId: req.user.id,
+          },
+        },
+      },
+    });
 
     if (!problems) {
       return res.status(404).json({
