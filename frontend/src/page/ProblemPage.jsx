@@ -54,6 +54,10 @@ const ProblemPage = () => {
     }, [submission])
 
     useEffect(() => {
+        getSubmissionForProblem(id);
+    }, [submission])
+
+    useEffect(() => {
         if (problem) {
             setCode(
                 problem.codeSnippet?.[selectedLanguage] || submission?.sourceCode || ""
