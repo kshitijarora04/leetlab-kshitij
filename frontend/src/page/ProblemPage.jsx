@@ -43,7 +43,7 @@ const ProblemPage = () => {
     const [testcases, setTestCases] = useState([]);
 
     const { executeCode, isExecuting, submission } = useExecutionStore();
-    
+
     useEffect(() => {
         getProblemById(id);
     }, [id]);
@@ -221,8 +221,8 @@ const ProblemPage = () => {
                             <span className="text-base-content/30">•</span>
                             <Users className="w-4 h-4" />
                             <span>{submissionCount} Submissions</span>
-                            <span className="text-base-content/30">•</span>
-                            <ThumbsUp className="w-4 h-4" />
+                            {/* <span className="text-base-content/30">•</span> */}
+                            {/* <ThumbsUp className="w-4 h-4" /> */}
                             <span>{ }</span>
                         </div>
                     </div>
@@ -307,6 +307,7 @@ const ProblemPage = () => {
                             <div className="h-[600px] w-full">
                                 <Editor
                                     height="100%"
+                                    // width="150%"
                                     language={selectedLanguage.toLowerCase()}
                                     theme="vs-dark"
                                     value={code}
@@ -334,9 +335,9 @@ const ProblemPage = () => {
                                         {!isExecuting && <Play className="w-4 h-4" />}
                                         Run Code
                                     </button>
-                                    <button className="btn btn-success gap-2">
+                                    {/* <button className="btn btn-success gap-2">
                                         Submit Solution
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>

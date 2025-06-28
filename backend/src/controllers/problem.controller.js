@@ -22,6 +22,8 @@ export const createProblem = async (req, res) => {
     testcases,
     codeSnippet,
     referenceSolutions,
+    hints,
+    editorial,
   } = req.body;
 
   //going to check the user role once again
@@ -93,6 +95,8 @@ export const createProblem = async (req, res) => {
         testcases,
         codeSnippet,
         referenceSolutions,
+        hints,
+        editorial,
         userId: req.user.id,
       },
     });
