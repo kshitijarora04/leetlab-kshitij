@@ -77,14 +77,14 @@ export const login = async (req, res) => {
 
     // creates a jwt token with the payload id where key is id and value is user.id, jwt secret and expiry
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "1d",
     });
 
     res.cookie("jwt", token, {
       httpOnly: true,
       sameSite: "strict",
       secure: process.env.NODE_ENV != "development",
-      maxAge: 1000 * 60 * 60 * 24 * 7, //7days
+      maxAge: 1000 * 60 * 60 * 24 * 1, //7days
     });
 
     res.status(201).json({

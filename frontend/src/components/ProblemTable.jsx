@@ -1,15 +1,23 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import { Link } from 'react-router-dom'
-import { Bookmark, PencilIcon, Plus, Trash, TrashIcon } from 'lucide-react'
+import { Bookmark, Loader2, PencilIcon, Plus, Trash, TrashIcon } from 'lucide-react'
+import { useAction } from '../store/useAction'
+import { useProblemStore } from '../store/useProblemStore'
+// import Modal from './Modal'
 
 const ProblemTable = ({ problems }) => {
+
     const { authUser } = useAuthStore();
 
     const [search, setSearch] = useState("");
     const [difficulty, setDifficulty] = useState("ALL");
     const [selectedTag, setSelectedTag] = useState("ALL");
     const [currentPage, setCurrentPage] = useState(1);
+
+    const { isDeletingproblem, onDeleteProblem } = useAction();
+
+    const { removeProblem } = useProblemStore();
 
     const difficulties = ["EASY", "MEDIUM", "HARD"];
 
@@ -39,7 +47,10 @@ const ProblemTable = ({ problems }) => {
         return filteredProblems.slice((currentPage - 1) * itemPerPage, currentPage * itemPerPage)
     }, [filteredProblems, currentPage])
 
-    const handleDelete = (id) => { };
+    const handleDelete = async (id) => {
+        await onDeleteProblem(id);
+        removeProblem(id);
+    };
 
     const handleAddToPlaylist = (id) => { };
 
@@ -162,6 +173,10 @@ const ProblemTable = ({ problems }) => {
                                                             onClick={() => handleDelete(problem.id)}
                                                             className="btn btn-sm btn-error"
                                                         >
+                                                            {/* {
+                                                                isDeletingproblem ? <Loader2 className='animate-spin h-4 w-4' /> :
+                                                                    <TrashIcon className='w-4 h-4 text-white' />
+                                                            } */}
                                                             <TrashIcon className="w-4 h-4 text-white" />
                                                         </button>
                                                         <button disabled className="btn btn-sm btn-warning">

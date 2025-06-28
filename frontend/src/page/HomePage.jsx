@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useProblemStore } from "../store/useProblemStore.js"
 import { Loader } from "lucide-react"
-import ProblemTable from '../components/Problemtable.jsx';
+import ProblemTable from '../components/ProblemTable.jsx';
 
 const HomePage = () => {
 
@@ -11,7 +11,7 @@ const HomePage = () => {
         () => {
             getAllProblems()
         },
-        [getAllProblems]
+        []
     )
 
     console.log(problems);

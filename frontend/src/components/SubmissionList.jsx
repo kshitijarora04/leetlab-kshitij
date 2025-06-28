@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 const SubmissionsList = ({ submissions, isLoading }) => {
+
     // Helper function to safely parse JSON strings
     const safeParse = (data) => {
         try {
@@ -37,7 +38,7 @@ const SubmissionsList = ({ submissions, isLoading }) => {
         return timeArray.reduce((acc, curr) => acc + curr, 0) / timeArray.length;
     };
 
-    // Loading state
+    // Loading state Spinner
     if (isLoading) {
         return (
             <div className="flex justify-center items-center p-8">
@@ -46,7 +47,7 @@ const SubmissionsList = ({ submissions, isLoading }) => {
         );
     }
 
-    // No submissions state
+    // No submissions state(? is optional chaining-->if submissions is not null then access submissions.length)
     if (!submissions?.length) {
         return (
             <div className="text-center p-8">

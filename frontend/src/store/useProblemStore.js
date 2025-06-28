@@ -51,4 +51,9 @@ export const useProblemStore = create((set) => ({
       toast.error("Error getting solved problems");
     }
   },
+
+  removeProblem: (id) =>
+    set((state) => ({
+      problems: state.problems.filter((p) => p.id !== id),
+    })),
 }));

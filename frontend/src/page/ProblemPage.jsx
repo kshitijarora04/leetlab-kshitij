@@ -43,8 +43,7 @@ const ProblemPage = () => {
     const [testcases, setTestCases] = useState([]);
 
     const { executeCode, isExecuting, submission } = useExecutionStore();
-    // const submission = useExecutionStore((state) => state.submission);
-
+    
     useEffect(() => {
         getProblemById(id);
     }, [id]);

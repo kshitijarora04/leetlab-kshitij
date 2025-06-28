@@ -55,7 +55,6 @@ const problemSchema = z.object({
 
 const sampledpData = {
     title: "Climbing Stairs",
-    category: "dp", // Dynamic Programming
     description:
         "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
     difficulty: "EASY",
@@ -375,7 +374,7 @@ const sampleStringProblem = {
           pass
   
   # Input parsing
-  if __name__ == "__main__":
+if __name__ == "__main__":
       import sys
       # Read the input string
       s = sys.stdin.readline().strip()
@@ -457,7 +456,7 @@ public class Main {
           return filtered_chars == filtered_chars[::-1]
   
   # Input parsing
-  if __name__ == "__main__":
+if __name__ == "__main__":
       import sys
       # Read the input string
       s = sys.stdin.readline().strip()
@@ -499,7 +498,6 @@ public class Main {
 `,
     },
 };
-
 
 
 const CreateProblemForm = () => {
@@ -560,6 +558,7 @@ const CreateProblemForm = () => {
 
     const loadSampleData = () => {
         const sampleData = sampleType == "DP" ? sampledpData : sampleStringProblem;
+        // const sampleData = sampleType == "DP" ? anotherProblem
         replaceTags(sampleData.tags.map((tag) => tag))
         replaceTestCases(sampleData.testcases.map((tc) => tc));
 
@@ -584,7 +583,7 @@ const CreateProblemForm = () => {
                                     type="button"
                                     className={`btn join-item ${sampleType === "DP" ? "btn-active" : ""
                                         }`}
-                                    onClick={() => setSampleType("array")}
+                                    onClick={() => setSampleType("DP")}
                                 >
                                     DP Problem
                                 </button>
