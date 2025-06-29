@@ -71,7 +71,6 @@ export const useAuthStore = create((set) => ({
     set({ isChangingPassword: true });
     try {
       const res = await axiosInstance.post("/auth/change-password", data);
-      set({ authUser: res.data.user });
       toast.success("Password Changed Successfully");
     } catch (error) {
       console.log("Error logging out", error);

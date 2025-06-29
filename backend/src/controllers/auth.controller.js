@@ -129,7 +129,6 @@ export const changepassword = async (req, res) => {
       where: { id: req.user.id },
       data: { password: hashedPassword },
     });
-
     return res
       .status(200)
       .json({ success: true, message: "Password Changed Successfully" });
