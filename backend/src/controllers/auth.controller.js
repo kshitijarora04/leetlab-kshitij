@@ -106,6 +106,41 @@ export const login = async (req, res) => {
   }
 };
 
+export const changepassword = async (req, res) => {
+  const { password, newpassword } = req.body;
+  try {
+    const user = await db.user.findUnique({
+      where: { id: req.user.id },
+    });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not Found" });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect current Password" });
+    }
+    const hashedPassword = await bcrypt.hash(newpassword, 10);
+    await db.user.update({
+      where: { id: req.user.id },
+      data: { password: hashedPassword },
+    });
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Password Changed Successfully" });
+  } catch (error) {
+    console.error("Error in changing Password", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Something Went Wrong" });
+  }
+};
+
 export const logout = async (req, res) => {
   try {
     res.clearCookie("jwt", {
