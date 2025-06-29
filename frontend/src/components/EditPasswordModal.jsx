@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 const EditPasswordModal = ({ isOpen, onClose, onSubmit }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-
     const handleFormSubmit = async (data) => {
         await onSubmit(data);
         reset()
@@ -33,28 +32,30 @@ const EditPasswordModal = ({ isOpen, onClose, onSubmit }) => {
                             <span className='label-text font-medium'>Old Password</span>
                         </label>
                         <input
-                            type='text'
+                            type='password'
                             className='input input-bordered w-full'
                             placeholder='Enter Old Password'
                             {...register('password', { required: 'Old Password is Required' })}
                         />
+
                         {errors.password && (
                             <label className="label">
                                 <span className="label-text-alt text-error">{errors.password.message}</span>
                             </label>
                         )}
+
                     </div>
                     {/* New Password Input Box */}
                     <div className='form-control'>
 
                         <label className='label'>
-                            <span className='label-text font-medium'>Old Password</span>
+                            <span className='label-text font-medium'>New Password</span>
                         </label>
 
                         <input
-                            type='text'
+                            type='password'
                             className='input input-bordered w-full'
-                            placeholder='Enter Old Password'
+                            placeholder='Enter New Password'
                             {...register('newpassword', { required: 'New Password Cannot be Blank' })}
                         />
 

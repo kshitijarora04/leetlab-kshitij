@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Mail, User, Shield, Image } from "lucide-react";
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../store/useAuthStore.js";
 import ProfileSubmission from "../components/ProfileSubmission";
 import ProblemSolvedByUser from "../components/ProblemSolvedByUser";
 import PlaylistProfile from "./PlayListProfile";
+import EditPasswordModal from "./EditPasswordModal";
 
 const Profile = () => {
     const { authUser } = useAuthStore();
+    const { changepassword } = useAuthStore();
+
+    const handleEditPassword = async (data) => {
+        await changepassword(data);
+    }
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-base-200 flex flex-col items-center justify-center py-10 px-4 md:px-8 w-full">
@@ -102,13 +110,17 @@ const Profile = () => {
 
                         {/* Action Buttons */}
                         <div className="card-actions justify-end mt-6">
-                            <button className="btn btn-outline btn-primary">Edit Profile</button>
-                            <button className="btn btn-primary">Change Password</button>
+                            <button className="btn btn-primary" onClick={() => setIsEditModalOpen(true)}>Change Password</button>
+                            {/* <button className="btn btn-primary">Change Password</button> */}
                         </div>
                     </div>
                 </div>
 
-
+                <EditPasswordModal
+                    isOpen={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    onSubmit={handleEditPassword}
+                />
             </div>
             <div>
 
