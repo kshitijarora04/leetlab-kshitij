@@ -54,7 +54,7 @@ const ProblemSolvedByUser = () => {
                             <h3 className="text-lg font-medium">No problems solved yet</h3>
                             <p className="text-base-content/70">Start solving problems to see them listed here!</p>
                             <div className="card-actions justify-end">
-                                <Link to="/problems" className="btn btn-primary">
+                                <Link to="/" className="btn btn-primary">
                                     View Problems
                                 </Link>
                             </div>
@@ -90,7 +90,7 @@ const ProblemSolvedByUser = () => {
                                             <td className="text-center">
                                                 <div className="flex justify-center">
                                                     <Link
-                                                        to={`/problems/${problem.id}`}
+                                                        to={`/problem/${problem.id}`}
                                                         className="btn btn-sm btn-outline btn-primary"
                                                     >
                                                         <ExternalLink size={14} className="mr-1" />
