@@ -10,6 +10,7 @@ import Layout from "./layout/Layout"
 import AdminRoute from "./components/AdminRoute"
 import AddProblem from "./page/AddProblem"
 import ProblemPage from "./page/ProblemPage"
+import Profile from "./components/Profile"
 
 const App = () => {
 
@@ -58,6 +59,12 @@ const App = () => {
 
         < Route element={<AdminRoute />}>
           <Route path='/add-problem' element={authUser ? <AddProblem /> : <Navigate to="/" />} />
+        </Route>
+
+        <Route
+          path="/profile"
+          element={authUser ? <Profile /> : <Navigate to="/login" />}
+        >
         </Route>
 
       </Routes>

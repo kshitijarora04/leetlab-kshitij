@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import { toast } from "react-hot-toast";
 
-export const useProblemStore = create((set) => ({
+export const useProblemStore = create((set, get) => ({
   problems: [],
   problem: null,
   solvedProblems: [],
@@ -42,8 +42,10 @@ export const useProblemStore = create((set) => ({
   },
 
   getSolvedProblemByUser: async () => {
+    console.log(get().solvedProblems);
+
     try {
-      const res = await axiosInstance.get("/problems/get-solved-problem");
+      const res = await axiosInstance.get("/problems/get-solved-problems");
 
       set({ solvedProblems: res.data.problems });
     } catch (error) {
