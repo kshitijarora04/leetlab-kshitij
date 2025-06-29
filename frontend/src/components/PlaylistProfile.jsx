@@ -86,7 +86,7 @@ const PlaylistProfile = () => {
                                                 <div className="flex items-center gap-2 mt-1 text-sm text-base-content/70">
                                                     <div className="flex items-center gap-1">
                                                         <List size={14} />
-                                                        <span>{playlist.problems.length} problems</span>
+                                                        <span>{playlist.problems ? playlist.problems.length : 0} problems</span>
                                                     </div>
                                                     <div className="flex items-center gap-1">
                                                         <Clock size={14} />
@@ -156,7 +156,6 @@ const PlaylistProfile = () => {
 
                                             <div className="flex justify-between items-center mt-4">
                                                 <button onClick={() => handleDelete(playlist.id)} className="btn btn-sm btn-error">Delete Playlist</button>
-
                                             </div>
                                         </div>
                                     )}

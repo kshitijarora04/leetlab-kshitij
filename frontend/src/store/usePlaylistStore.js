@@ -103,11 +103,9 @@ export const usePlaylistStore = create((set, get) => ({
     try {
       set({ isLoading: true });
       await axiosInstance.delete(`/playlist/${playlistId}`);
-
       set((state) => ({
         playlists: state.playlists.filter((p) => p.id !== playlistId),
       }));
-
       toast.success("Playlist deleted successfully");
     } catch (error) {
       console.error("Error deleting playlist:", error);
@@ -116,5 +114,4 @@ export const usePlaylistStore = create((set, get) => ({
       set({ isLoading: false });
     }
   },
-  
 }));
