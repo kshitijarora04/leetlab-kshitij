@@ -238,11 +238,13 @@ const ProblemTable = ({ problems }) => {
                     Next
                 </button>
             </div>
+
             <CreatePlaylistModal
                 isOpen={isCreateModalOpen}
                 onClose={() => setIsCreateModalOpen(false)}
                 onSubmit={handleCreatePlaylist}
             />
+            
             <AddToPlaylist
                 isOpen={isAddToPlaylistModalOpen}
                 onClose={() => setisAddToPlaylistModalOpen(false)}
