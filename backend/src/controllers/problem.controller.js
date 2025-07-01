@@ -189,7 +189,7 @@ export const updateproblem = async (req, res) => {
   if (req.user.role !== "ADMIN") {
     return res
       .status(403)
-      .json({ message: "You are not allowed to create a problem" });
+      .json({ message: "You are not allowed to update a problem" });
   }
 
   try {
@@ -239,14 +239,14 @@ export const updateproblem = async (req, res) => {
       },
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       message: "Problem updated successfully",
       updatedProblem,
     });
   } catch (error) {
     console.error(error);
-    return res.status(501).json({ error: "Error updating the problem" });
+    return res.status(500).json({ error: "Error updating the problem" });
   }
 };
 

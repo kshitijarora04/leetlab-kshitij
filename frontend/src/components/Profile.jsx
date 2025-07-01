@@ -82,7 +82,7 @@ const Profile = () => {
                             </div>
 
                             {/* Role Status */}
-                            <div className="stat bg-base-200 rounded-box">
+                            {/* <div className="w-full stat bg-base-200 rounded-box">
                                 <div className="stat-figure text-primary">
                                     <Shield className="w-8 h-8" />
                                 </div>
@@ -91,10 +91,10 @@ const Profile = () => {
                                 <div className="stat-desc">
                                     {authUser.role === "ADMIN" ? "Full system access" : "Limited access"}
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* Profile Image Status */}
-                            <div className="stat bg-base-200 rounded-box">
+                            {/* <div className="stat bg-base-200 rounded-box">
                                 <div className="stat-figure text-primary">
                                     <Image className="w-8 h-8" />
                                 </div>
@@ -105,7 +105,8 @@ const Profile = () => {
                                 <div className="stat-desc">
                                     {authUser.image ? "Image available" : "Upload a profile picture"}
                                 </div>
-                            </div>
+                            </div> */}
+
                         </div>
 
                         {/* Action Buttons */}
