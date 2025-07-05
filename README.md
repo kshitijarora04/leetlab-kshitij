@@ -70,6 +70,7 @@ npm install
 3. Set Up Environment Variables Create a .env file in the root directory and add the following variables
 
 You can deploy Judge0 API on localhost or can use an online API, modify the backend code accordingly if not deploying judge0 on local host
+Read the Judge0 Installation Guide if you want to set up judge 0 locally
 
 ```
 PORT =
