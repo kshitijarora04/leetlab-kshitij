@@ -4,7 +4,7 @@ import { ArrowLeft, Mail, User, Shield, Image } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import ProfileSubmission from "../components/ProfileSubmission";
 import ProblemSolvedByUser from "../components/ProblemSolvedByUser";
-import PlaylistProfile from "./PlayListProfile";
+import PlaylistProfile from "./PlaylistProfile";
 import EditPasswordModal from "./EditPasswordModal";
 
 const Profile = () => {
