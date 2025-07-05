@@ -11,6 +11,7 @@ import AdminRoute from "./components/AdminRoute"
 import AddProblem from "./page/AddProblem"
 import ProblemPage from "./page/ProblemPage"
 import Profile from "./components/Profile"
+import Updateproblem from "./page/Updateproblem"
 
 const App = () => {
 
@@ -67,6 +68,9 @@ const App = () => {
         >
         </Route>
 
+        < Route element={<AdminRoute />}>
+          <Route path='/update-problem/:problemId' element={authUser ? <Updateproblem /> : <Navigate to="/" />} />
+        </Route>
       </Routes>
 
     </div >

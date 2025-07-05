@@ -195,7 +195,6 @@ export const updateproblem = async (req, res) => {
   try {
     for (const [language, solutionCode] of Object.entries(referenceSolutions)) {
       const languageId = getJudge0LanguageId(language);
-
       if (!languageId) {
         return res.status(400).json({ error: `${language} is not supported ` });
       }

@@ -25,7 +25,7 @@ const Profile = () => {
                     <Link to={"/"} className="btn btn-circle btn-ghost">
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
-                    <h1 className="text-3xl font-bold text-primary">Profile</h1>
+                    <h1 className="text-3xl font-bold text-primary">Update Problem</h1>
                 </div>
             </div>
 
@@ -80,6 +80,8 @@ const Profile = () => {
                                 <div className="stat-title">User ID</div>
                                 <div className="stat-value text-sm break-all">{authUser.id}</div>
                             </div>
+
+                            {/* To be corrected */}
 
                             {/* Role Status */}
                             {/* <div className="w-full stat bg-base-200 rounded-box">

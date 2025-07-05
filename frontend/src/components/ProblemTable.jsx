@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
-import { Link, useAsyncError } from 'react-router-dom'
+import { Link, Navigate, useAsyncError, useNavigate } from 'react-router-dom'
 import { Bookmark, Loader2, PencilIcon, Plus, Trash, TrashIcon, } from 'lucide-react'
 import { useAction } from '../store/useAction'
 import { useProblemStore } from '../store/useProblemStore'
@@ -27,6 +27,8 @@ const ProblemTable = ({ problems }) => {
     const { removeProblem } = useProblemStore();
 
     const { createPlaylist } = usePlaylistStore();
+
+    const navigate = useNavigate();
 
     const difficulties = ["EASY", "MEDIUM", "HARD"];
 
@@ -192,7 +194,10 @@ const ProblemTable = ({ problems }) => {
 
                                                             <TrashIcon className="w-4 h-4 text-white" />
                                                         </button>
-                                                        <button disabled className="btn btn-sm btn-warning">
+                                                        <button
+                                                            onClick={() => navigate(`/update-problem/${problem.id}`)}
+                                                            className="btn btn-sm btn-warning"
+                                                        >
                                                             <PencilIcon className="w-4 h-4 text-white" />
                                                         </button>
                                                     </div>
@@ -244,7 +249,7 @@ const ProblemTable = ({ problems }) => {
                 onClose={() => setIsCreateModalOpen(false)}
                 onSubmit={handleCreatePlaylist}
             />
-            
+
             <AddToPlaylist
                 isOpen={isAddToPlaylistModalOpen}
                 onClose={() => setisAddToPlaylistModalOpen(false)}
