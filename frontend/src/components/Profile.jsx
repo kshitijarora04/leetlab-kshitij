@@ -25,7 +25,7 @@ const Profile = () => {
                     <Link to={"/"} className="btn btn-circle btn-ghost">
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
-                    <h1 className="text-3xl font-bold text-primary">Update Problem</h1>
+                    <h1 className="text-3xl font-bold text-primary">Profile</h1>
                 </div>
             </div>
 
