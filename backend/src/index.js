@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "https://leetlab-kshitij-n5sy.vercel.app",
+    origin: process.env.FRONTEND_CLIENT_URL,
     credentials: true,
   })
 );
