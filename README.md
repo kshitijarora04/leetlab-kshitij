@@ -71,6 +71,8 @@ npm install
 
 You can deploy Judge0 API on localhost or can use an online API, modify the backend code accordingly if not deploying judge0 on local host
 
+***Read the Judge0 Installation Guide if you want to set up judge 0 locally***
+
 ```
 PORT =
 DATABASE_URL=
