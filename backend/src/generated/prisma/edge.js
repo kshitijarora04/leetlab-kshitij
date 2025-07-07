@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+ * Prisma Client JS version: 6.11.1
+ * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
+  client: "6.11.1",
+  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -245,6 +245,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -256,12 +260,13 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.8.2",
-  "engineVersion": "2060c79ba17c6bb9f5823312b6f6b7f4a845738e",
+  "clientVersion": "6.11.1",
+  "engineVersion": "f40f79ec31188888a2e33acda0ecc8fd10a853a9",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -270,8 +275,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  USER\n}\n\nenum Difficulty {\n  EASY\n  MEDIUM\n  HARD\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  name      String?\n  email     String   @unique\n  image     String?\n  role      UserRole @default(USER)\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // to display the problems created by a single user-->One to Many Realtion\n  problems      Problem[]\n  submission    Submission[]\n  problemSolved ProblemSolved[]\n  playlists     Playlist[]\n}\n\nmodel Problem {\n  id          String     @id @default(uuid())\n  title       String\n  description String\n  difficulty  Difficulty @default(EASY)\n  tags        String[] //tags for a problem\n  userId      String\n  examples    Json\n  constraints String\n  hints       String?\n  editorial   String?\n\n  testcases          Json\n  codeSnippet        Json\n  referenceSolutions Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Relationship\n  // name of relation-->user of type User\n  // userId is the foriegn key in the Problem Model which refers to id in the User Model\n  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)\n  submission        Submission[]\n  solvedBy          ProblemSolved[]\n  problemsPlaylists ProblemInPlaylist[]\n}\n\nmodel Submission {\n  id            String   @id @default(uuid())\n  userId        String\n  problemId     String\n  sourceCode    Json\n  language      String\n  stdin         String?\n  stdout        String?\n  stderr        String?\n  compileOutput String?\n  status        String // Accepted\n  memory        String?\n  time          String?\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n\n  testcases TestCaseResult[]\n\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)\n}\n\nmodel TestCaseResult {\n  id            String  @id @default(uuid())\n  submissionId  String\n  testCase      Int\n  passed        Boolean\n  stdout        String?\n  expected      String\n  stderr        String?\n  compileOutput String?\n  status        String\n  memory        String?\n  time          String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)\n\n  @@index([submissionId])\n}\n\nmodel ProblemSolved {\n  id        String @id @default(uuid())\n  userId    String\n  problemId String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, problemId])\n}\n\nmodel Playlist {\n  id          String   @id @default(uuid())\n  name        String\n  description String?\n  userId      String\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  problems ProblemInPlaylist[]\n  user     User                @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([name, userId]) //unique playlist names per user\n}\n\nmodel ProblemInPlaylist {\n  id         String   @id @default(uuid())\n  playlistId String\n  problemId  String\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)\n\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)\n\n  @@unique([playlistId, problemId])\n}\n",
-  "inlineSchemaHash": "436d0010fd3868e50da8aac67e306dc1b0cd254bb9e8868ee356170c3afd6596",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n  output        = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  USER\n}\n\nenum Difficulty {\n  EASY\n  MEDIUM\n  HARD\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  name      String?\n  email     String   @unique\n  image     String?\n  role      UserRole @default(USER)\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // to display the problems created by a single user-->One to Many Realtion\n  problems      Problem[]\n  submission    Submission[]\n  problemSolved ProblemSolved[]\n  playlists     Playlist[]\n}\n\nmodel Problem {\n  id          String     @id @default(uuid())\n  title       String\n  description String\n  difficulty  Difficulty @default(EASY)\n  tags        String[] //tags for a problem\n  userId      String\n  examples    Json\n  constraints String\n  hints       String?\n  editorial   String?\n\n  testcases          Json\n  codeSnippet        Json\n  referenceSolutions Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Relationship\n  // name of relation-->user of type User\n  // userId is the foriegn key in the Problem Model which refers to id in the User Model\n  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)\n  submission        Submission[]\n  solvedBy          ProblemSolved[]\n  problemsPlaylists ProblemInPlaylist[]\n}\n\nmodel Submission {\n  id            String   @id @default(uuid())\n  userId        String\n  problemId     String\n  sourceCode    Json\n  language      String\n  stdin         String?\n  stdout        String?\n  stderr        String?\n  compileOutput String?\n  status        String // Accepted\n  memory        String?\n  time          String?\n  createdAt     DateTime @default(now())\n  updatedAt     DateTime @updatedAt\n\n  testcases TestCaseResult[]\n\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)\n}\n\nmodel TestCaseResult {\n  id            String  @id @default(uuid())\n  submissionId  String\n  testCase      Int\n  passed        Boolean\n  stdout        String?\n  expected      String\n  stderr        String?\n  compileOutput String?\n  status        String\n  memory        String?\n  time          String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)\n\n  @@index([submissionId])\n}\n\nmodel ProblemSolved {\n  id        String @id @default(uuid())\n  userId    String\n  problemId String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, problemId])\n}\n\nmodel Playlist {\n  id          String   @id @default(uuid())\n  name        String\n  description String?\n  userId      String\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  problems ProblemInPlaylist[]\n  user     User                @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([name, userId]) //unique playlist names per user\n}\n\nmodel ProblemInPlaylist {\n  id         String   @id @default(uuid())\n  playlistId String\n  problemId  String\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)\n\n  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)\n\n  @@unique([playlistId, problemId])\n}\n",
+  "inlineSchemaHash": "0ed698d134f77aecbc099a52fa4da4139e6112e97f895502c0d9aab61ffd06d2",
   "copyEngine": true
 }
 config.dirname = '/'
