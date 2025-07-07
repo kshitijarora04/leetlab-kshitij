@@ -27,7 +27,7 @@ export const register = async (req, res) => {
     // sending the cookie so we automatically login
     res.cookie("jwt", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "None",
       secure: process.env.NODE_ENV != "development",
       maxAge: 1000 * 60 * 60 * 24 * 7, //7days
     });
@@ -82,7 +82,7 @@ export const login = async (req, res) => {
 
     res.cookie("jwt", token, {
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "None",
       secure: process.env.NODE_ENV != "development",
       maxAge: 1000 * 60 * 60 * 24 * 1, //7days
     });
