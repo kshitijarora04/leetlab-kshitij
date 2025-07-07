@@ -30,6 +30,7 @@ export const register = async (req, res) => {
       sameSite: "None",
       secure: process.env.NODE_ENV != "development",
       maxAge: 1000 * 60 * 60 * 24 * 7, //7days
+      path: "/",
     });
 
     res.status(201).json({
@@ -85,6 +86,7 @@ export const login = async (req, res) => {
       sameSite: "None",
       secure: process.env.NODE_ENV != "development",
       maxAge: 1000 * 60 * 60 * 24 * 1, //7days
+      path: "/",
     });
 
     res.status(201).json({
@@ -146,6 +148,7 @@ export const logout = async (req, res) => {
       httpOnly: true,
       sameSite: "strict",
       secure: process.env.NODE_ENV !== "development",
+      path: "/",
     });
 
     res.status(200).json({
